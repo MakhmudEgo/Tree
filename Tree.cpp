@@ -1,0 +1,107 @@
+//
+// Created by Mahmud Jego on 2/7/21.
+//
+
+#include "Tree.hpp"
+
+Tree::Tree(const int &index) : _index(index), _parent(nullptr)
+{}
+
+Tree::Tree(const int &index, Tree *child) : _index(index), _parent(nullptr)
+{
+	if (child)
+	{
+		this->_children.push_back(child);
+		child->_parent = this;
+	}
+}
+
+Tree::Tree(const int &index, Tree *child, Tree *parent) : _index(index), _parent(parent)
+{
+	if (parent)
+	{
+		parent->addChild(this);
+	}
+	if (child)
+	{
+		this->_children.push_back(child);
+		child->_parent = this;
+	}
+}
+
+void Tree::addChild(Tree *newChild)
+{
+	if (newChild)
+	{
+		newChild->_parent = this;
+		this->_children.push_back(newChild);
+	}
+};
+
+int Tree::getIndex() const
+{
+	return (this->_index);
+}
+
+const std::vector<Tree *> &Tree::getChildren() const
+{
+	return (this->_children);
+}
+
+Tree *Tree::getParent() const
+{
+	return (this->_parent);
+}
+
+void Tree::setIndex(int index)
+{
+	this->_index = index;
+}
+
+void Tree::setChildren(const std::vector<Tree *> &children)
+{
+	for (int i = 0; i < children.size(); ++i)
+	{
+		this->_children.push_back(children[i]);
+	}
+}
+
+void Tree::setParent(Tree *parent)
+{
+	if (parent)
+	{
+		this->_parent = parent;
+		parent->addChild(this);
+	}
+}
+
+Tree::~Tree()
+{
+	if (!this->_parent)
+	{
+		killChildren(this);
+	}
+}
+
+void Tree::killChildren(Tree *parent)
+{
+	for (int i = 0; i < parent->_children.size(); ++i)
+	{
+		if (!parent->_children.empty())
+		{
+			killChildren(parent->_children[i]);
+		}
+		delete parent->_children[i];
+	}
+}
+
+
+int heightTree(const Tree *parent)
+{
+	int height = 1;
+	for (int i = 0; i < parent->getChildren().size(); ++i)
+	{
+		height = 1 + heightTree(parent->getChildren()[i]);
+	}
+	return (height);
+}
