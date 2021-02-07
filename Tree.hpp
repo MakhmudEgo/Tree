@@ -13,7 +13,7 @@ public:
 	Tree(const int&);
 	Tree(const int& index, Tree *child);
 	Tree(const int& index, Tree *child, Tree *parent);
-
+	Tree& operator=(const Tree&);
 	virtual ~Tree();
 
 	//getters

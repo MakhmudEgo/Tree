@@ -106,6 +106,23 @@ void Tree::killChildren(Tree *parent)
 	}
 }
 
+Tree &Tree::operator=(const Tree& tree)
+{
+	if (this == &tree) {
+		return *this;
+	}
+
+	_parent = new Tree(tree._index);
+	_children = tree._children;
+
+	for (int i = 0; i < tree._children.size(); ++i) {
+		_children[i] = new Tree(tree._children[i]->_index);
+		*_children[i] = *(tree._children[i]);
+	}
+
+	return (*this);
+}
+
 int heightTree(const Tree *parent)
 {
 	int height = 1;

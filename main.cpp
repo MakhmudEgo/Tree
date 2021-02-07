@@ -32,6 +32,9 @@ int main()
 		tree2->addChild(new Tree(11));
 		tree2->addChild(new Tree(12));
 		tree2->addChild(new Tree(13));
+		Tree newTree(1);
+		newTree = *tree1;
+
 		delete tree1;
 	}
 
