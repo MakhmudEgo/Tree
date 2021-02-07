@@ -4,10 +4,12 @@
 
 #include "Tree.hpp"
 
-Tree::Tree(const int &index) : _index(index), _parent(nullptr)
+Tree::Tree(const int &index)
+: _index(index), _parent(nullptr)
 {}
 
-Tree::Tree(const int &index, Tree *child) : _index(index), _parent(nullptr)
+Tree::Tree(const int &index, Tree *child)
+: _index(index), _parent(nullptr)
 {
 	if (child)
 	{
@@ -16,7 +18,8 @@ Tree::Tree(const int &index, Tree *child) : _index(index), _parent(nullptr)
 	}
 }
 
-Tree::Tree(const int &index, Tree *child, Tree *parent) : _index(index), _parent(parent)
+Tree::Tree(const int &index, Tree *child, Tree *parent)
+: _index(index), _parent(parent)
 {
 	if (parent)
 	{
@@ -81,6 +84,14 @@ Tree::~Tree()
 	{
 		killChildren(this);
 	}
+	if (!this->_parent)
+	{
+		std::cout << this->_index << " parent dead :(" << std::endl;
+	}
+	else
+	{
+		std::cout << this->_index << " child dead :(" << std::endl;
+	}
 }
 
 void Tree::killChildren(Tree *parent)
@@ -94,7 +105,6 @@ void Tree::killChildren(Tree *parent)
 		delete parent->_children[i];
 	}
 }
-
 
 int heightTree(const Tree *parent)
 {
