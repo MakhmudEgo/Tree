@@ -12,10 +12,10 @@ template<class T>
 class Tree {
 public:
 	explicit Tree(const T&index)
-	: _index(index), _parent(this)
+	: _data(index), _parent(this)
 	{}
 	explicit Tree(const T& index, Tree *child)
-	: _index(index), _parent(this)
+	: _data(index), _parent(this)
 	{
 		if (child)
 		{
@@ -24,7 +24,7 @@ public:
 		}
 	}
 	explicit Tree(const T& index, Tree *child, Tree *parent)
-	: _index(index), _parent(parent)
+	: _data(index), _parent(parent)
 	{
 		if (parent)
 		{
@@ -57,18 +57,18 @@ public:
 		}
 		if (this == this->_parent)
 		{
-			std::cout << this->_index << " parent dead :(" << std::endl;
+			std::cout << this->_data << " parent dead :(" << std::endl;
 		}
 		else
 		{
-			std::cout << this->_index << " child dead :(" << std::endl;
+			std::cout << this->_data << " child dead :(" << std::endl;
 		}
 	}
 
 	//getters
-	int getIndex() const
+	const T& getData() const
 	{
-		return (this->_index);
+		return (this->_data);
 	}
 	const std::vector<Tree *> &getChildren() const
 	{
@@ -82,7 +82,7 @@ public:
 	//setters
 	void setIndex(int index)
 	{
-		this->_index = index;
+		this->_data = index;
 	}
 	void setChildren(const std::vector<Tree *> &children)
 	{
@@ -109,7 +109,7 @@ public:
 	}
 
 private:
-	T _index;
+	T _data;
 	std::vector<Tree*> _children;
 	Tree *_parent;
 
@@ -128,11 +128,11 @@ private:
 	{
 		if (parent == this)
 		{
-			this->_index = tree._index;
+			this->_data = tree._data;
 		}
 		for (size_t i = 0; i < tree._children.size(); ++i)
 		{
-			Tree *top = new Tree(tree._children[i]->_index, nullptr, parent);
+			Tree *top = new Tree(tree._children[i]->_data, nullptr, parent);
 			if (!tree._children[i]->_children.empty())
 			{
 				copyTree(*tree._children[i], top);
@@ -142,14 +142,28 @@ private:
 };
 
 template<class T>
-int heightTree(const Tree<T> *parent)
+int heightTree(const Tree<T>& tree)
 {
 	int height = 1;
-	for (size_t i = 0; i < parent->getChildren().size(); ++i)
+	for (size_t i = 0; i < tree.getChildren().size(); ++i)
 	{
-		height = 1 + heightTree(parent->getChildren()[i]);
+		height = 1 + heightTree(*tree.getChildren()[i]);
 	}
 	return (height);
+}
+
+template<class T>
+void printTree(const Tree<T> &tree)
+{
+	if (&tree == tree.getParent())
+	{
+		std::cout << tree.getData() << std::endl;
+	}
+	for (size_t i = 0; i < tree.getChildren().size(); ++i)
+	{
+		std::cout << tree.getChildren()[i]->getData() << std::endl;
+		printTree(*tree.getChildren()[i]);
+	}
 }
 
 #endif //TREE_HPP
