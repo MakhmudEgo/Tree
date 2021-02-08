@@ -80,11 +80,11 @@ void Tree::setParent(Tree *parent)
 
 Tree::~Tree()
 {
-	if (!this->_parent)
+	if (this == this->_parent)
 	{
 		killChildren(this);
 	}
-	if (!this->_parent)
+	if (this == this->_parent)
 	{
 		std::cout << this->_index << " parent dead :(" << std::endl;
 	}
