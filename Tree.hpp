@@ -155,13 +155,9 @@ int heightTree(const Tree<T>& tree)
 template<class T>
 void printTree(const Tree<T> &tree)
 {
-	if (&tree == tree.getParent())
-	{
-		std::cout << tree.getData() << std::endl;
-	}
+	std::cout << tree.getData() << std::endl;
 	for (size_t i = 0; i < tree.getChildren().size(); ++i)
 	{
-		std::cout << tree.getChildren()[i]->getData() << std::endl;
 		printTree(*tree.getChildren()[i]);
 	}
 }
