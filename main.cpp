@@ -42,6 +42,7 @@ int main()
 
 		delete copyTree;
 		delete tree1;
+
 	}
 
 	return (0);

@@ -115,7 +115,7 @@ private:
 
 	void killChildren(Tree *parent)
 	{
-		for (int i = 0; i < parent->_children.size(); ++i)
+		for (size_t i = 0; i < parent->_children.size(); ++i)
 		{
 			if (!parent->_children.empty())
 			{
@@ -130,7 +130,7 @@ private:
 		{
 			this->_index = tree._index;
 		}
-		for (int i = 0; i < tree._children.size(); ++i)
+		for (size_t i = 0; i < tree._children.size(); ++i)
 		{
 			Tree *top = new Tree(tree._children[i]->_index, nullptr, parent);
 			if (!tree._children[i]->_children.empty())
@@ -145,7 +145,7 @@ template<class T>
 int heightTree(const Tree<T> *parent)
 {
 	int height = 1;
-	for (int i = 0; i < parent->getChildren().size(); ++i)
+	for (size_t i = 0; i < parent->getChildren().size(); ++i)
 	{
 		height = 1 + heightTree(parent->getChildren()[i]);
 	}
