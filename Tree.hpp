@@ -13,6 +13,7 @@ public:
 	Tree(const int&);
 	Tree(const int& index, Tree *child);
 	Tree(const int& index, Tree *child, Tree *parent);
+	Tree(const Tree&);
 	Tree& operator=(const Tree&);
 	virtual ~Tree();
 
@@ -33,6 +34,7 @@ private:
 	Tree *_parent;
 
 	void killChildren(Tree *parent);
+	void copyTree(const Tree& tree, Tree *parent);
 };
 
 int heightTree(const Tree *parent);

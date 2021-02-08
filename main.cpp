@@ -35,6 +35,8 @@ int main()
 		Tree newTree(1);
 		newTree = *tree1;
 
+		Tree *copyTree = new Tree(newTree);
+
 		delete tree1;
 	}
 

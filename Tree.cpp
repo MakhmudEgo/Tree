@@ -5,11 +5,11 @@
 #include "Tree.hpp"
 
 Tree::Tree(const int &index)
-: _index(index), _parent(nullptr)
+: _index(index), _parent(this)
 {}
 
 Tree::Tree(const int &index, Tree *child)
-: _index(index), _parent(nullptr)
+: _index(index), _parent(this)
 {
 	if (child)
 	{
@@ -108,19 +108,33 @@ void Tree::killChildren(Tree *parent)
 
 Tree &Tree::operator=(const Tree& tree)
 {
-	if (this == &tree) {
-		return *this;
+	if (this != &tree)
+	{
+		copyTree(tree, this);
 	}
-
-	_parent = new Tree(tree._index);
-	_children = tree._children;
-
-	for (int i = 0; i < tree._children.size(); ++i) {
-		_children[i] = new Tree(tree._children[i]->_index);
-		*_children[i] = *(tree._children[i]);
-	}
-
 	return (*this);
+}
+
+void Tree::copyTree(const Tree &tree, Tree *parent)
+{
+	if (parent == this)
+	{
+		this->_index = tree._index;
+	}
+	for (int i = 0; i < tree._children.size(); ++i)
+	{
+		Tree *top = new Tree(tree._children[i]->_index, nullptr, parent);
+		if (!tree._children[i]->_children.empty())
+		{
+			copyTree(*tree._children[i], top);
+		}
+	}
+}
+
+Tree::Tree(const Tree &tree)
+: _parent(this)
+{
+	operator=(tree);
 }
 
 int heightTree(const Tree *parent)
